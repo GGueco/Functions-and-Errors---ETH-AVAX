@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a project that shows functions and error-handling techniques in Ethereum smart contracts. It allows a user to deposit and withdraw funds from a balance, performs safe addition of numbers, and demonstrates how to use the require, assert, and revert statements for error handling. 
+This is a project that shows functions and error-handling techniques in Ethereum smart contracts. 
 
 ### Executing program
 
@@ -11,29 +11,30 @@ This is a project that shows functions and error-handling techniques in Ethereum
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract functionsandErrors {
-    uint256 public balance;
+contract kantoGeneration{
+    address public player;
+    string public starterPokemon;
 
-    function depositCash(uint256 amount) public {
-        require(amount > 0, "Amount must be greater than zero");
-        balance += amount;
+    constructor() {
+        player = msg.sender;
     }
 
-    function withdrawCash(uint256 amount) public {
-        require(amount <= balance, "Not enough balance");
-        balance -= amount;
-    }
+    function chooseStarter(uint8 choice) public {
+        require(choice >= 1 && choice <= 3, "1 for Charmander, 2 for Bulbasaur, and 3 for Squirtle only.");
 
-    function add(uint256 a, uint256 b) public pure returns (uint256) {
-        uint256 result = a + b;
-        assert(result >= a);
-        return result;
-    }
+        string memory pokemon;
 
-    function revertEx(uint num) public pure {
-        if(num<=10){
-            revert("Input must be greater than 10");
+        if (choice == 1) {
+            pokemon = "Charmander[Fire Type Starter]";
+        } else if (choice == 2) {
+            pokemon = "Bulbasaur[Grass Type Starter]";
+        } else if (choice == 3) {
+            pokemon = "Squirtle[Water Type Starter]";
+        } else {
+            revert("Don't be too picky, only pick the number of 1-3 Kanto starters."); 
         }
+        assert(player != address(0));
+        starterPokemon = pokemon;
     }
 }
 
